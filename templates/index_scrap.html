@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestorPro: Advanced Stock Analysis Dashboard</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Darker Slate Blue */
+            --secondary-color: #34495e; /* Lighter Slate Blue */
+            --accent-color: #1abc9c; /* Turquoise */
+            --accent-hover-color: #16a085;
+            --background-color: #ecf0f1; /* Light Gray */
+            --card-background: #ffffff;
+            --text-color: #34495e;
+            --heading-color: #2c3e50;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand, .card-header {
+            font-family: 'Poppins', sans-serif;
+            color: var(--heading-color);
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            padding: 0.75rem 1.5rem; /* Increased padding */
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700; /* Bolder */
+            font-size: 1.5rem;
+        }
+        .navbar-brand i {
+            color: var(--accent-color); /* Icon color */
+        }
+
+        .container-fluid {
+            padding: 30px; /* More padding overall */
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* Softer rounding */
+            box-shadow: 0 5px 15px var(--shadow-color);
+            margin-bottom: 25px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 12px 12px 0 0 !important; /* Match card rounding */
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .card-body {
+            padding: 1.5rem; /* More padding inside cards */
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.25); /* Accent color focus */
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover-color);
+            border-color: var(--accent-hover-color);
+        }
+        .btn-primary i {
+            margin-right: 8px;
+        }
+
+        .stock-data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertically align items */
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color); /* Subtle separator */
+            font-size: 0.95rem;
+        }
+        .stock-data-item:last-child {
+            border-bottom: none;
+        }
+
+        .stock-data-label {
+            font-weight: 500; /* Slightly bolder labels */
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        .stock-data-label i {
+            margin-right: 8px;
+            color: var(--accent-color); /* Icon color */
+            width: 16px; /* Fixed width for alignment */
+            text-align: center;
+        }
+
+        .stock-data-value {
+            font-weight: 500;
+        }
+
+        /* Custom badge colors */
+        .badge-success-custom {
+            color: #fff;
+            background-color: var(--success-color);
+        }
+        .badge-danger-custom {
+            color: #fff;
+            background-color: var(--danger-color);
+        }
+        .badge-warning-custom {
+            color: var(--heading-color);
+            background-color: var(--warning-color);
+        }
+
+        #loading {
+            display: none; /* Hidden by default */
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent overlay */
+            border-radius: 12px;
+            position: absolute; /* Position relative to the column */
+            top: 0;
+            left: 15px; /* Account for col padding */
+            right: 15px; /* Account for col padding */
+            z-index: 10; /* Ensure it's on top */
+        }
+        .spinner-border {
+            width: 3.5rem;
+            height: 3.5rem;
+            color: var(--primary-color);
+        }
+        #loading p {
+            margin-top: 15px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        /* Enhanced styling for the GPT response content */
+        .gpt-response {
+            background-color: #f8f9fa; /* Light background for contrast */
+            border-left: 5px solid var(--accent-color);
+            padding: 25px; /* More padding */
+            margin: 0; /* Remove default margin if applied */
+            line-height: 1.7; /* Improve readability */
+            border-radius: 0 0 12px 12px; /* Match card rounding at bottom */
+        }
+
+        .gpt-response h1, .gpt-response h2, .gpt-response h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--heading-color); /* Consistent heading color */
+        }
+        .gpt-response h1 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .gpt-response h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.4rem;
+        }
+        .gpt-response h3 {
+            font-size: 1.3rem;
+        }
+        .gpt-response ul, .gpt-response ol {
+            padding-left: 1.5rem; /* Slightly less indent */
+            margin-bottom: 1.2rem;
+        }
+        .gpt-response li {
+            margin-bottom: 0.6rem;
+        }
+        .gpt-response table {
+            width: 100%;
+            margin-bottom: 1.8rem;
+            border-collapse: separate; /* Use separate for border-radius */
+            border-spacing: 0;
+            box-shadow: 0 3px 8px var(--shadow-color);
+            border-radius: 8px;
+            overflow: hidden; /* Clip content to rounded corners */
+            border: 1px solid var(--border-color);
+        }
+        .gpt-response table th {
+            background-color: var(--secondary-color); /* Match card header */
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border: none; /* Remove default borders */
+        }
+        .gpt-response table td {
+            padding: 0.8rem 1rem;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            background-color: var(--card-background); /* White background for rows */
+        }
+        .gpt-response table tr:last-child td {
+            border-bottom: none;
+        }
+        .gpt-response table tr:nth-child(even) td {
+            background-color: #fbfcfc; /* Very subtle striping */
+        }
+        .gpt-response table tr:hover td {
+            background-color: #f1f4f5; /* Subtle hover */
+        }
+
+        /* Specific table styles within GPT response */
+        .gpt-response table.trading-plan th,
+        .gpt-response table.summary-table th {
+            background-color: var(--accent-color);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+         .gpt-response table.trading-plan,
+         .gpt-response table.summary-table {
+             border: 2px solid var(--accent-color);
+         }
+
+         .gpt-response table.trading-plan td,
+         .gpt-response table.summary-table td {
+            text-align: center;
+            font-weight: 500;
+         }
+
+        .gpt-response code {
+            background-color: #e9ecef; /* Slightly darker code background */
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 3px;
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        }
+        .gpt-response pre {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid var(--border-color);
+        }
+        .gpt-response blockquote {
+            border-left: 4px solid var(--info-color); /* Use info color for quote */
+            padding: 0.5rem 1rem;
+            color: #555;
+            margin-left: 0;
+            margin-right: 0;
+            background-color: #fdfdfe;
+        }
+        /* Card styling within GPT response */
+        .gpt-response .card {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px var(--shadow-color); /* Consistent shadow */
+        }
+        .gpt-response .card-header {
+            font-weight: 600;
+            padding: 0.9rem 1.25rem;
+            background-color: var(--primary-color); /* Different header for emphasis */
+            color: white;
+        }
+        .gpt-response .card-body {
+            padding: 1.25rem;
+        }
+
+        /* Valuation Chart Specific Styling */
+        .valuation-chart-container {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem; /* Space below chart */
+        }
+        .valuation-chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+        .valuation-summary {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .container-fluid {
+                padding: 15px;
+            }
+            .card-body {
+                padding: 1rem;
+            }
+             .stock-data-item {
+                 flex-direction: column; /* Stack label and value on small screens */
+                 align-items: flex-start;
+                 border-bottom: 1px solid var(--border-color);
+                 padding-bottom: 10px;
+                 margin-bottom: 10px;
+             }
+             .stock-data-label {
+                 margin-bottom: 5px;
+             }
+             .stock-data-value {
+                 align-self: flex-end; /* Push value to the right */
+             }
+            .gpt-response {
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-chart-line mr-2"></i>InvestorPro
+        </a>
+        </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-search-dollar mr-2"></i>Stock Analysis Input
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="stock-form">
+                            <div class="form-group">
+                                <label for="stock" class="font-weight-bold">Enter Stock Symbol:</label>
+                                <input type="text" id="stock" name="stock" class="form-control form-control-lg" placeholder="e.g., AAPL, GOOGL" required>
+                                <small class="form-text text-muted">Enter the ticker symbol of the stock you want to analyze.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg mt-3">
+                                <i class="fas fa-cogs"></i>Analyze Stock
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div id="loading">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p>Crunching the numbers... Please wait.</p>
+                </div>
+
+                {% if stock_data %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                         <i class="fas fa-poll mr-2"></i>Analysis Results for {{ stock | upper }}
+                    </div>
+                    <div class="card-body">
+
+                        {% if stock_data.real_price_data %}
+                        <h5 class="mb-3"><i class="fas fa-balance-scale-right mr-2 text-primary"></i>Comprehensive Valuation Analysis</h5>
+                        <div class="valuation-chart-container text-center mb-4">
+                            <img src="/real_price_chart/{{ stock }}" alt="Real Price Chart for {{ stock | upper }}" class="img-fluid">
+                        </div>
+
+                        <div class="row valuation-summary">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-bullseye"></i>Weighted Fair Value:</span>
+                                    <span class="stock-data-value font-weight-bold">${{ "%.2f"|format(stock_data.real_price_data.weighted_fair_value) }}</span>
+                                </div>
+                            </div>
+                             <div class="col-md-6">
+                                 <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-arrows-alt-h"></i>Current vs Fair Value:</span>
+                                    <span class="stock-data-value">
+                                        {% if stock_data.real_price_data.has_valuation_methods %}
+                                            {% set diff = stock_data.real_price_data.price_difference %}
+                                            <span class="badge {{ 'badge-danger-custom' if diff > 5 else ('badge-success-custom' if diff < -5 else 'badge-warning-custom') }} p-2">
+                                                {{ "%.2f"|format(diff) }}%
+                                                {% if diff > 5 %} Overvalued {% elif diff < -5 %} Undervalued {% else %} Fairly Valued {% endif %}
+                                            </span>
+                                        {% else %}
+                                            <span class="badge badge-secondary p-2">N/A</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if 'error_message' in stock_data.real_price_data %}
+                        <div class="alert alert-warning mt-3 small">
+                            <i class="fas fa-exclamation-triangle mr-2"></i><strong>Note:</strong> Limited valuation data. {{ stock_data.real_price_data.error_message }}
+                        </div>
+                        {% endif %}
+
+                        {% if stock_data.real_price_data.has_valuation_methods %}
+                        <div class="mt-4">
+                            <h6><i class="fas fa-calculator mr-2 text-secondary"></i>Valuation Method Breakdown</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover table-bordered" style="font-size: 0.9rem;">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Fair Value ($)</th>
+                                            <th>Weight (%)</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for method, data in stock_data.real_price_data.method_valuations.items() %}
+                                        <tr>
+                                            <td><strong>{{ method | upper }}</strong></td>
+                                            <td>{{ "%.2f"|format(data.value) }}</td>
+                                            <td>{{ "%.0f"|format(data.weight * 100) }}%</td>
+                                            <td>
+                                                {% if method == 'dcf' %}Discounted Cash Flow{% endif %}
+                                                {% if method == 'pe' %}Price-to-Earnings Comparison{% endif %}
+                                                {% if method == 'book' %}Book Value (Tangible Assets){% endif %}
+                                                {% if method == 'dividend' %}Dividend Discount Model{% endif %}
+                                                {% if method == 'relative' %}Market Price Benchmark{% endif %}
+                                                </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info mt-3 small">
+                             <i class="fas fa-info-circle mr-2"></i><strong>Note:</strong> Intrinsic value calculation requires more financial data than available for {{ stock | upper }}. Chart shows historical price only.
+                        </div>
+                        {% endif %}
+                        <hr class="my-4">
+                        {% endif %}
+
+                        <h5 class="mb-3"><i class="fas fa-chart-area mr-2 text-primary"></i>Technical Indicators</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-dollar-sign"></i>Current Price:</span>
+                                    <span class="stock-data-value">${{ "%.2f"|format(stock_data.current_price) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-arrow-up"></i>52-Week High:</span>
+                                    <span class="stock-data-value">${{ "%.2f"|format(stock_data.high_52week) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-arrow-down"></i>52-Week Low:</span>
+                                    <span class="stock-data-value">${{ "%.2f"|format(stock_data.low_52week) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-wave-square"></i>50-Day MA:</span>
+                                    <span class="stock-data-value">${{ "%.2f"|format(stock_data.ma_50) }}</span>
+                                </div>
+                             </div>
+                            <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-wave-square"></i>200-Day MA:</span>
+                                    <span class="stock-data-value">${{ "%.2f"|format(stock_data.ma_200) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-tachometer-alt"></i>RSI (14-day):</span>
+                                    <span class="stock-data-value">{{ "%.2f"|format(stock_data.rsi) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-chart-line"></i>MACD:</span>
+                                    <span class="stock-data-value">{{ "%.2f"|format(stock_data.macd) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-signal"></i>MACD Signal:</span>
+                                    <span class="stock-data-value">{{ "%.2f"|format(stock_data.macd_signal) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4 mb-3"><i class="fas fa-sliders-h mr-2 text-primary"></i>Volume Analysis</h5>
+                         <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-chart-bar"></i>Current Volume:</span>
+                                    <span class="stock-data-value">{{ "{:,}".format(stock_data.volume) }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-history"></i>Average Volume:</span>
+                                    <span class="stock-data-value">{{ "{:,.0f}".format(stock_data.avg_volume) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4 mb-3"><i class="fas fa-building mr-2 text-primary"></i>Fundamental Analysis</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-coins"></i>Market Cap:</span>
+                                    <span class="stock-data-value">${{ "{:,}".format(stock_data.market_cap) }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-percentage"></i>P/E Ratio:</span>
+                                    <span class="stock-data-value">{{ stock_data.pe_ratio if stock_data.pe_ratio != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-long-arrow-alt-right"></i>Forward P/E:</span>
+                                    <span class="stock-data-value">{{ stock_data.forward_pe if stock_data.forward_pe != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-chart-pie"></i>PEG Ratio:</span>
+                                    <span class="stock-data-value">{{ stock_data.peg_ratio if stock_data.peg_ratio != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-exchange-alt"></i>Beta:</span>
+                                    <span class="stock-data-value">{{ stock_data.beta if stock_data.beta != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-hand-holding-usd"></i>Dividend Yield:</span>
+                                    <span class="stock-data-value">{{ stock_data.dividend_yield if stock_data.dividend_yield != 'N/A' else 'N/A' }}</span>
+                                </div>
+                             </div>
+                             <div class="col-md-6">
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-sort-amount-up-alt"></i>Earnings Growth:</span>
+                                    <span class="stock-data-value">{{ stock_data.earnings_growth if stock_data.earnings_growth != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-sort-amount-up"></i>Revenue Growth:</span>
+                                    <span class="stock-data-value">{{ stock_data.revenue_growth if stock_data.revenue_growth != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-piggy-bank"></i>Profit Margins:</span>
+                                    <span class="stock-data-value">{{ stock_data.profit_margins if stock_data.profit_margins != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-balance-scale-left"></i>Debt to Equity:</span>
+                                    <span class="stock-data-value">{{ stock_data.debt_to_equity if stock_data.debt_to_equity != 'N/A' else 'N/A' }}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-wallet"></i>Free Cash Flow:</span>
+                                    <span class="stock-data-value">{% if stock_data.free_cash_flow != 'N/A' %}${{ "{:,}".format(stock_data.free_cash_flow) }}{% else %}N/A{% endif %}</span>
+                                </div>
+                                <div class="stock-data-item">
+                                    <span class="stock-data-label"><i class="fas fa-book"></i>Price to Book:</span>
+                                    <span class="stock-data-value">{{ stock_data.price_to_book if stock_data.price_to_book != 'N/A' else 'N/A' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if gpt_response %}
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-robot mr-2"></i>AI-Powered Insights & Trading Plan
+                    </div>
+                    <div class="gpt-response">
+                        {{ gpt_response | safe }}
+                    </div>
+                </div>
+                {% endif %}
+            </div> </div> </div> <footer class="text-center py-4 mt-4">
+            <small class="text-muted">&copy; {{ now.year }} InvestorPro. Financial data provided for informational purposes only.</small>
+            </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Show loading indicator on form submit
+            $('#stock-form').on('submit', function() {
+                $('#loading').fadeIn('fast'); // Use fadeIn for smoother appearance
+                 // Optional: Hide previous results immediately
+                 $('.card.mb-4').not(':first').hide(); // Hide results cards
+                 $('.card:has(.gpt-response)').hide(); // Hide AI card
+            });
+
+            // Optional: Hide loading indicator if the page loads with results already (e.g., after form submission)
+            // This depends on how your backend handles the response. If it re-renders the whole page,
+            // the loading indicator won't be visible initially unless you trigger it.
+            // If you were using AJAX, you'd hide it in the success callback.
+             if ($('.card-body').length > 1) { // Check if result cards exist
+                 $('#loading').hide();
+             }
+        });
+    </script>
+</body>
+</html>
