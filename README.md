@@ -47,12 +47,31 @@ Once the analysis is complete, GPT-4 generates a 5000+ word structured investmen
    OPENAI_API_KEY=your_openai_api_key
    ```
 
-4. **Run the app**  
+4. **Run the app (Locally)**  
    ```bash
-   python app.py
+   python scrap.py
    ```
 
    The app runs locally on `http://localhost:5007`
+
+---
+
+## 🐳 Run with Docker
+
+1. **Build and run with Docker Compose**
+   ```bash
+   docker compose up --build
+   ```
+
+   The app will be accessible at [http://0.0.0.0:5003](http://0.0.0.0:5003) (host port 5003 mapped to container port 5007).
+
+2. **(Optional) Run with Docker only**
+   ```bash
+   docker build -t stockgpt .
+   docker run -p 5003:5007 --env OPENAI_API_KEY=your_openai_api_key stockgpt
+   ```
+
+---
 
 ---
 
@@ -79,10 +98,12 @@ Once the analysis is complete, GPT-4 generates a 5000+ word structured investmen
 📦 stockgpt/
 ├── templates/
 │   └── index_scrap.html      # HTML frontend
-├── app.py                    # Main Flask server with GPT integration
+├── scrap.py                  # Main Flask server with GPT integration
 ├── .env                      # Environment variables (not tracked in Git)
 ├── image.png                 # Example output chart
-└── requirements.txt          # Python dependencies
+├── requirements.txt          # Python dependencies
+├── Dockerfile                # Docker image definition
+└── docker-compose.yml        # Docker Compose configuration
 ```
 
 ---

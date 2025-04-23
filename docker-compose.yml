@@ -1,0 +1,16 @@
+# Docker Compose file for StockGPT Flask app
+version: '3.8'
+services:
+  stockgpt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
+    restart: unless-stopped
