@@ -1,0 +1,10 @@
+flask
+requests
+beautifulsoup4
+python-dotenv
+yfinance
+pandas
+numpy
+matplotlib
+openai
+markdown

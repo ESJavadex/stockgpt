@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request, send_file
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import requests
+from bs4 import BeautifulSoup
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -33,21 +30,34 @@ import markdown
 import re
 
 def chat_with_gpt(prompt):
-    chat_completion = client.chat.completions.create(
-        model="gpt-4.1",
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=0
-    )
-    gpt_response = chat_completion.choices[0].message.content
-    
+    print("[DEBUG] OpenAI API Key Loaded:", bool(os.environ.get("OPENAI_API_KEY")))
+    print("[DEBUG] Prompt sent to GPT-4.1:")
+    print(prompt[:1000] + ("..." if len(prompt) > 1000 else ""))
+    try:
+        chat_completion = client.chat.completions.create(
+            model="o4-mini",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+        print("[DEBUG] Raw chat_completion object:", chat_completion)
+        if hasattr(chat_completion, 'choices') and chat_completion.choices:
+            gpt_response = chat_completion.choices[0].message.content
+            print("[DEBUG] GPT Response:", gpt_response)
+        else:
+            print("[ERROR] No choices in chat_completion:", chat_completion)
+            gpt_response = "[No response from GPT-4.1]"
+    except Exception as e:
+        print("[ERROR] Exception during OpenAI GPT call:", e)
+        import traceback
+        traceback.print_exc()
+        gpt_response = f"[OpenAI Exception: {e}]"
     # Process the response to improve formatting
     processed_response = preprocess_markdown(gpt_response)
-    
+    print("[DEBUG] Processed Response:", processed_response)
     # Convert markdown to HTML with extensions for tables and other formatting
     html_response = markdown.markdown(
         processed_response,
@@ -58,10 +68,10 @@ def chat_with_gpt(prompt):
             'markdown.extensions.sane_lists'
         ]
     )
-    
+    print("[DEBUG] Markdown to HTML:", html_response)
     # Further enhance the HTML with additional styling
     html_response = postprocess_html(html_response)
-    
+    print("[DEBUG] Final HTML:", html_response)
     return html_response
 
 def preprocess_markdown(text):
@@ -783,15 +793,22 @@ def index_scrap():
         #routes = ["cheat-sheet"]
         scraped_content = {}
 
-        driver = webdriver.Chrome()
-
         try:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
             for route in routes:
                 url = f"https://www.barchart.com/stocks/quotes/{stock}/{route}"
-                driver.get(url)
-                wait = WebDriverWait(driver, 10)
-                main_content_div = wait.until(EC.presence_of_element_located((By.ID, "main-content-column")))
-                scraped_content[route] = main_content_div.text.strip()
+                response = requests.get(url, headers=headers, timeout=10)
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.text, "html.parser")
+                    main_content_div = soup.find(id="main-content-column")
+                    if main_content_div:
+                        scraped_content[route] = main_content_div.get_text(strip=True)
+                    else:
+                        scraped_content[route] = "[main-content-column not found]"
+                else:
+                    scraped_content[route] = f"[Failed to fetch: HTTP {response.status_code}]"
 
             stock_data = get_stock_data(stock)
             
@@ -955,7 +972,7 @@ def index_scrap():
             - Write at least 5000 words of narrative, with clear sub‑headings under each section.
             - Explain everything in detail, deep analysis.
             - Do the report in spanish. Keep in english the words you want. 
-            
+            - Reply in markdown! But don't specify the '''markdown'''
             """
             print("PROMPT:", prompt)
             gpt_response_html= chat_with_gpt(prompt)
@@ -965,7 +982,7 @@ def index_scrap():
 
         
         finally:
-            driver.quit()
+            pass
     
     return render_template('index_scrap.html',now = datetime.now)
 
@@ -982,4 +999,4 @@ def real_price_chart(stock):
         return str(e), 500
 
 if __name__ == '__main__':
-    app.run(port=5007, debug=True)
+    app.run(host="0.0.0.0", port=5003, debug=True)
