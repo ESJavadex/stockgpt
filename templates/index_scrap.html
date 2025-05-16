@@ -192,144 +192,247 @@
             border-radius: 0 0 12px 12px; /* Match card rounding at bottom */
         }
 
-        .gpt-response h1, .gpt-response h2, .gpt-response h3 {
-            margin-top: 1.8rem;
-            margin-bottom: 1rem;
+        /* Elegant and Simple Markdown to HTML Styling */
+
+        .gpt-response .gpt-h1,
+        .gpt-response .gpt-h2,
+        .gpt-response .gpt-h3,
+        .gpt-response .gpt-h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--heading-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.6em;
+            line-height: 1.3;
             font-weight: 600;
-            color: var(--heading-color); /* Consistent heading color */
         }
-        .gpt-response h1 {
-            font-size: 1.8rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
+
+        .gpt-response .gpt-h1 {
+            font-size: 1.9rem; /* Slightly larger */
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.4em;
         }
-        .gpt-response h2 {
-            font-size: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.4rem;
+
+        .gpt-response .gpt-h2 {
+            font-size: 1.6rem; /* Slightly larger */
+            border-bottom: 1px solid #ddd; /* Lighter border */
+            padding-bottom: 0.3em;
         }
-        .gpt-response h3 {
+
+        .gpt-response .gpt-h3 {
             font-size: 1.3rem;
+            color: var(--secondary-color); /* Slightly different color */
         }
-        .gpt-response ul, .gpt-response ol {
-            padding-left: 1.5rem; /* Slightly less indent */
-            margin-bottom: 1.2rem;
-        }
-        .gpt-response li {
-            margin-bottom: 0.6rem;
-        }
-        .gpt-response table {
-            width: 100%;
-            margin-bottom: 1.8rem;
-            border-collapse: separate; /* Use separate for border-radius */
-            border-spacing: 0;
-            box-shadow: 0 3px 8px var(--shadow-color);
-            border-radius: 8px;
-            overflow: hidden; /* Clip content to rounded corners */
-            border: 1px solid var(--border-color);
-        }
-        .gpt-response table th {
-            background-color: var(--secondary-color); /* Match card header */
-            color: white;
-            font-weight: 600;
-            text-align: left;
-            padding: 0.8rem 1rem;
-            border: none; /* Remove default borders */
-        }
-        .gpt-response table td {
-            padding: 0.8rem 1rem;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-            background-color: var(--card-background); /* White background for rows */
-        }
-        .gpt-response table tr:last-child td {
-            border-bottom: none;
-        }
-        .gpt-response table tr:nth-child(even) td {
-            background-color: #fbfcfc; /* Very subtle striping */
-        }
-        .gpt-response table tr:hover td {
-            background-color: #f1f4f5; /* Subtle hover */
-        }
-
-        /* Specific table styles within GPT response */
-        .gpt-response table.trading-plan th,
-        .gpt-response table.summary-table th {
-            background-color: var(--accent-color);
-            text-align: center;
-            font-size: 0.95rem;
-        }
-         .gpt-response table.trading-plan,
-         .gpt-response table.summary-table {
-             border: 2px solid var(--accent-color);
-         }
-
-         .gpt-response table.trading-plan td,
-         .gpt-response table.summary-table td {
-            text-align: center;
+        
+        .gpt-response .gpt-h4 {
+            font-size: 1.1rem;
+            color: #555; /* Dark gray */
             font-weight: 500;
-         }
+        }
 
-        .gpt-response code {
-            background-color: #e9ecef; /* Slightly darker code background */
-            padding: 0.2em 0.4em;
-            margin: 0;
-            font-size: 85%;
-            border-radius: 3px;
-            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        .gpt-response p {
+            margin-bottom: 1em;
+            color: #444; /* Softer text color */
         }
-        .gpt-response pre {
-            background-color: #e9ecef;
-            padding: 1rem;
-            border-radius: 5px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            border: 1px solid var(--border-color);
+
+        .gpt-response .gpt-list {
+            padding-left: 1.5rem; /* Standard indent */
+            margin-bottom: 1em;
         }
-        .gpt-response blockquote {
-            border-left: 4px solid var(--info-color); /* Use info color for quote */
-            padding: 0.5rem 1rem;
-            color: #555;
-            margin-left: 0;
-            margin-right: 0;
-            background-color: #fdfdfe;
+        
+        .gpt-response .gpt-list .gpt-list-item,
+        .gpt-response .gpt-list li { /* Catchall for li not getting class */
+            margin-bottom: 0.4em;
+            padding: 0.2em 0; /* Minimal padding for list items */
+            background-color: transparent !important; /* Override Bootstrap */
+            border: none !important; /* Override Bootstrap */
+            color: #444;
         }
-        /* Card styling within GPT response */
-        .gpt-response .card {
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 10px var(--shadow-color); /* Consistent shadow */
+        
+        .gpt-response .gpt-ordered-list {
+            list-style-type: decimal; /* Ensure ordered lists have numbers */
         }
-        .gpt-response .card-header {
+        
+        .gpt-response .gpt-list ul,
+        .gpt-response .gpt-list ol {
+            margin-top: 0.5em; /* Space before nested list */
+            margin-bottom: 0.5em; /* Space after nested list */
+        }
+
+        .gpt-response .gpt-table {
+            width: 100%;
+            margin-bottom: 1.5em;
+            border-collapse: collapse; /* Cleaner borders */
+            font-size: 0.9rem; /* Slightly smaller table font */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .gpt-response .gpt-table th,
+        .gpt-response .gpt-table td {
+            border: 1px solid #e0e0e0; /* Lighter table borders */
+            padding: 0.6em 0.8em; /* Consistent padding */
+            text-align: left;
+            vertical-align: top; /* Align content to top */
+        }
+
+        .gpt-response .gpt-table th {
+            background-color: #f9f9f9; /* Very light gray for headers */
             font-weight: 600;
-            padding: 0.9rem 1.25rem;
-            background-color: var(--primary-color); /* Different header for emphasis */
-            color: white;
+            color: var(--heading-color);
         }
-        .gpt-response .card-body {
-            padding: 1.25rem;
+        
+        .gpt-response .gpt-table tr:nth-child(even) td {
+            background-color: #fdfdfd; /* Subtle striping for rows */
         }
 
-        /* Valuation Chart Specific Styling */
-        .valuation-chart-container {
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
+        .gpt-response .gpt-blockquote {
+            border-left: 3px solid var(--accent-color);
+            padding: 0.8em 1.2em;
+            margin: 1.5em 0;
+            background-color: #f5f7f9; /* Light background */
+            color: #555;
+            font-style: italic;
+        }
+        
+        .gpt-response .gpt-blockquote p {
+            margin-bottom: 0; /* No extra margin for paragraphs inside blockquote */
+        }
+
+        .gpt-response .gpt-code-block {
+            background-color: #2d2d2d; /* Dark background for code blocks */
+            color: #f8f8f2; /* Light text for contrast */
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.85em; /* Slightly smaller for code */
+            line-height: 1.5;
+        }
+
+        .gpt-response .gpt-code-block code {
+            background-color: transparent; /* Code inside pre should not have its own bg */
+            color: inherit;
+            padding: 0;
+            font-size: 1em; /* Inherit pre's font size */
+        }
+
+        .gpt-response .gpt-inline-code {
+            background-color: #eef0f2; /* Light gray for inline code */
+            color: #c7254e; /* Conventional color for inline code */
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.85em;
+        }
+        
+        .gpt-response hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd; /* Simple, thin horizontal rule */
+            margin: 2em 0;
+        }
+
+        /* Specific card-like styling for sections */
+        .gpt-response .gpt-section-card {
+            background-color: var(--card-background);
             border: 1px solid var(--border-color);
-            margin-bottom: 1.5rem; /* Space below chart */
-        }
-        .valuation-chart-container img {
-            max-width: 100%;
-            height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 10px var(--shadow-color);
+            box-shadow: 0 3px 10px var(--shadow-color);
+            margin-top: 2em;
+            margin-bottom: 2em;
+            overflow: hidden; /* To contain header and body */
         }
-        .valuation-summary {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
+
+        .gpt-response .gpt-section-card-header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 0.8em 1.2em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gpt-response .gpt-section-card-body {
+            padding: 1.2em;
+        }
+        
+        .gpt-response .gpt-section-card-body > *:first-child {
+            margin-top: 0; /* Remove top margin from first element in card body */
+        }
+        .gpt-response .gpt-section-card-body > *:last-child {
+            margin-bottom: 0; /* Remove bottom margin from last element in card body */
+        }
+        
+        /* Financial metric and ticker styling */
+        .gpt-response .financial-metric {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 500; /* Less bold */
+            color: var(--accent-color);
+            background-color: #eaf6f6; /* Lighter background */
+            padding: 0.15em 0.35em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .gpt-response .stock-ticker code,
+        .gpt-response .stock-ticker .gpt-inline-code { /* If ticker is already code */
+            font-weight: 500;
+            color: var(--primary-color);
+            background-color: #e8ecf1;
+            padding: 0.15em 0.35em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        /* Remove default highlight styles if they are too aggressive */
+        .gpt-response .highlight pre code span {
+            /* Reset Pygments styles if they conflict with elegance */
+            /* Example: color: inherit !important; background-color: transparent !important; */
+        }
+        
+        /* Ensure that the general styles for h1-h3 in gpt-response are not overridden by overly specific old rules */
+        .gpt-response h1, .gpt-response h2, .gpt-response h3, .gpt-response h4 {
+            /* These are already defined above with .gpt-h1 etc. but this is a fallback */
+            font-weight: 600; /* default from above */
+            margin-top: 1.5em; /* default from above */
+        }
+        
+        /* Clean up previous specific header stylings that might conflict */
+        .gpt-response h1.text-primary.font-weight-bold,
+        .gpt-response h2.text-secondary.font-weight-bold,
+        .gpt-response h3.text-info.font-weight-bold {
+            /* These styles will be handled by .gpt-h1, .gpt-h2, .gpt-h3 */
+            /* Resetting them here if they are still applied by postprocess_html too aggressively */
+        }
+        
+        /* Ensure .gpt-response tables don't inherit overly complex styles from general table CSS */
+        .gpt-response table.table-striped, .gpt-response table.table-bordered {
+            /* These will be handled by .gpt-table */
+        }
+        
+        /* Remove conflicting styles if any */
+        .gpt-response .section-header,
+        .gpt-response .financial-header {
+            /* These were older attempts, ensure they don't conflict with gpt-h1/h2/h3 etc. */
+            border-bottom: none; /* Reset if they add extra borders */
+            padding-bottom: 0;
+            margin-bottom: 0.6em; /* Align with new h styles */
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .gpt-response ul, .gpt-response ol {
+            padding-left: 2rem; /* Ensure this overrides Bootstrap defaults if necessary */
+        }
+        .gpt-response li.list-group-item { /* This was from Bootstrap, ensure custom styles take over */
+            padding: 0.2em 0 !important;
+            margin-bottom: 0.4em !important;
+            background-color: transparent !important;
+            border: none !important;
+        }
+        .gpt-response ul.list-group { /* This was from Bootstrap */
+            padding-left: 1.5rem !important; /* Custom padding for gpt-list */
         }
 
         /* Responsive adjustments */
@@ -356,6 +459,143 @@
             .gpt-response {
                 padding: 15px;
             }
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 10pt;
+            right: 10pt;
+            opacity: 0.5;
+            z-index: -1000;
+            font-size: 8pt;
+            color: #ccc;
+        }
+
+        /* Download container styling */
+        .download-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border: 1px solid #e1e5ea;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .download-container:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .download-container .btn-primary {
+            background-color: #4e73df;
+            border-color: #4e73df;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 12px 24px;
+        }
+        
+        .download-container .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2653d4;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .download-container i.fas {
+            font-size: 1.2em;
+        }
+        
+        /* GPT response styling */
+
+        /* Add syntax highlighting styles for the GPT response */
+        .gpt-response .highlight {
+            background: transparent;
+            border: none;
+        }
+
+        .gpt-response pre {
+            white-space: pre-wrap;
+            background-color: #ffffff;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Syntax highlighting colors */
+        .gpt-response .gh { /* Headers */ 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: #1a5276; 
+            margin-top: 1.5rem;
+        }
+
+        .gpt-response .gu { /* Sub-headers */
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #2874a6;
+            margin-top: 1rem;
+        }
+
+        .gpt-response .gs { /* Strong/Bold */
+            font-weight: bold;
+            color: #145a32;
+        }
+
+        .gpt-response .ge { /* Emphasis/Italic */
+            font-style: italic;
+        }
+
+        .gpt-response .k { /* Bullet points */
+            color: #212f3d;
+        }
+
+        .gpt-response .w { /* Whitespace - keep as-is */
+            color: inherit;
+        }
+
+        .gpt-response .financial-metric {
+            font-weight: bold;
+            color: #2e86c1;
+            background-color: #f4f6f7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+
+        .gpt-response code {
+            background-color: #f8f9fa;
+            color: #c0392b;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .gpt-response .badge {
+            display: inline-block;
+            padding: 0.2em 0.6em;
+            font-size: 85%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+        }
+
+        .gpt-response .badge-primary {
+            color: #fff;
+            background-color: #007bff;
+        }
+
+        /* Table formatting fixes */
+        .gpt-response tr, .gpt-response td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        /* Fix for enhanced display of stock analysis */
+        .gpt-response {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
         }
 
     </style>
@@ -596,6 +836,219 @@
                 </div>
                 {% endif %}
 
+                {% if stock %}
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <i class="fas fa-chart-line"></i> {{ stock }} Analysis
+                                </div>
+                                <div class="card-body">
+                                    <div class="download-container mb-4 text-center p-3 bg-light rounded">
+                                        <h5 class="mb-2"><i class="fas fa-download text-primary"></i> Download Your Analysis</h5>
+                                        <p class="small text-muted mb-3">Get this complete analysis in a well-formatted document for offline viewing, printing or sharing</p>
+                                        <a href="/download_pdf/{{ stock }}" class="btn btn-lg btn-primary shadow-sm">
+                                            <i class="fas fa-file-pdf mr-2"></i> Download PDF Report
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- New features panel -->
+                                    <div class="row">
+                                        <!-- Sentiment Analysis -->
+                                        {% if stock_data.sentiment and stock_data.sentiment.success %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-header bg-info text-white">
+                                                    <i class="fas fa-newspaper"></i> Sentiment Analysis
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-chart-bar"></i> Overall Sentiment
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            <span class="badge 
+                                                                {% if stock_data.sentiment.sentiment_label == 'Positive' %}
+                                                                    badge-success-custom
+                                                                {% elif stock_data.sentiment.sentiment_label == 'Negative' %}
+                                                                    badge-danger-custom
+                                                                {% else %}
+                                                                    badge-warning-custom
+                                                                {% endif %}">
+                                                                {{ stock_data.sentiment.sentiment_label }}
+                                                                ({{ stock_data.sentiment.sentiment_score|round(2) }})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-list-alt"></i> News Count
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            {{ stock_data.sentiment.news_count }}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {% if stock_data.sentiment.news %}
+                                                    <div class="mt-3">
+                                                        <h6>Recent Headlines</h6>
+                                                        <ul class="list-group">
+                                                            {% for news in stock_data.sentiment.news[:3] %}
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ news.headline[:50] }}{% if news.headline|length > 50 %}...{% endif %}
+                                                                <span class="badge 
+                                                                    {% if news.sentiment_label == 'Positive' %}
+                                                                        badge-success-custom
+                                                                    {% elif news.sentiment_label == 'Negative' %}
+                                                                        badge-danger-custom
+                                                                    {% else %}
+                                                                        badge-warning-custom
+                                                                    {% endif %}">
+                                                                    {{ news.sentiment_label }}
+                                                                </span>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        
+                                        <!-- Technical Indicators -->
+                                        {% if stock_data.technical_indicators and stock_data.technical_indicators.success %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-header bg-primary text-white">
+                                                    <i class="fas fa-chart-line"></i> Technical Signals
+                                                </div>
+                                                <div class="card-body">
+                                                    {% if stock_data.technical_indicators.overall_signal %}
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-signal"></i> Overall Signal
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            <span class="badge 
+                                                                {% if stock_data.technical_indicators.overall_signal.signal == 'bullish' %}
+                                                                    badge-success-custom
+                                                                {% elif stock_data.technical_indicators.overall_signal.signal == 'bearish' %}
+                                                                    badge-danger-custom
+                                                                {% else %}
+                                                                    badge-warning-custom
+                                                                {% endif %}">
+                                                                {{ stock_data.technical_indicators.overall_signal.signal|upper }}
+                                                                ({{ stock_data.technical_indicators.overall_signal.strength }})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    
+                                                    {% if stock_data.technical_indicators.support_levels %}
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-arrow-up"></i> Support Levels
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            {% for level in stock_data.technical_indicators.support_levels[:3] %}
+                                                            <span class="badge badge-info">${{ level|round(2) }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    
+                                                    {% if stock_data.technical_indicators.resistance_levels %}
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-arrow-down"></i> Resistance Levels
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            {% for level in stock_data.technical_indicators.resistance_levels[:3] %}
+                                                            <span class="badge badge-info">${{ level|round(2) }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    
+                                                    {% if stock_data.technical_indicators.signals %}
+                                                    <div class="mt-3">
+                                                        <h6>Latest Signals</h6>
+                                                        <ul class="list-group">
+                                                            {% for signal in stock_data.technical_indicators.signals[:3] %}
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ signal.indicator }}
+                                                                <span class="badge 
+                                                                    {% if signal.signal == 'bullish' %}
+                                                                        badge-success-custom
+                                                                    {% elif signal.signal == 'bearish' %}
+                                                                        badge-danger-custom
+                                                                    {% else %}
+                                                                        badge-warning-custom
+                                                                    {% endif %}">
+                                                                    {{ signal.signal|upper }}
+                                                                </span>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        
+                                        <!-- Sector Analysis -->
+                                        {% if stock_data.sector_comparison and stock_data.sector_comparison.success %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-header bg-secondary text-white">
+                                                    <i class="fas fa-industry"></i> Sector Analysis
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-building"></i> Sector
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            {{ stock_data.sector_comparison.sector }}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="stock-data-item">
+                                                        <div class="stock-data-label">
+                                                            <i class="fas fa-tag"></i> Industry
+                                                        </div>
+                                                        <div class="stock-data-value">
+                                                            {{ stock_data.sector_comparison.industry }}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {% if stock_data.sector_comparison.peers %}
+                                                    <div class="mt-3">
+                                                        <h6>Peer Comparison</h6>
+                                                        <ul class="list-group">
+                                                            {% for peer in stock_data.sector_comparison.peers[:3] %}
+                                                            <li class="list-group-item small">
+                                                                <strong>{{ peer.name }}</strong> ({{ peer.symbol }})
+                                                                <div>PE: {{ peer.pe_ratio|round(2) if peer.pe_ratio else 'N/A' }}</div>
+                                                                <div>Price: ${{ peer.current_price|round(2) if peer.current_price else 'N/A' }}</div>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if gpt_response %}
                 <div class="card">
                     <div class="card-header">
@@ -623,14 +1076,208 @@
                  $('.card:has(.gpt-response)').hide(); // Hide AI card
             });
 
-            // Optional: Hide loading indicator if the page loads with results already (e.g., after form submission)
-            // This depends on how your backend handles the response. If it re-renders the whole page,
-            // the loading indicator won't be visible initially unless you trigger it.
-            // If you were using AJAX, you'd hide it in the success callback.
-             if ($('.card-body').length > 1) { // Check if result cards exist
-                 $('#loading').hide();
-             }
+            // Hide loading indicator if the page loads with results already
+            if ($('.card-body').length > 1) { // Check if result cards exist
+                $('#loading').hide();
+            }
+            
+            // Enhanced formatting for stock analysis
+            if ($('.gpt-response').length) {
+                enhanceStockAnalysisFormatting();
+            }
         });
+        
+        // Function to enhance stock analysis formatting
+        function enhanceStockAnalysisFormatting() {
+            var gptResponse = $('.gpt-response');
+            
+            // Check if the response contains syntax-highlighted code or markdown
+            var hasSyntaxHighlighting = gptResponse.find('.highlight').length > 0;
+            
+            // If we have a highlighted code block, make sure code is properly styled
+            if (hasSyntaxHighlighting) {
+                // Find all code blocks and apply proper styling
+                gptResponse.find('.highlight').each(function() {
+                    $(this).css({
+                        'background': 'transparent',
+                        'border': 'none'
+                    });
+                    
+                    $(this).find('pre').css({
+                        'white-space': 'pre-wrap',
+                        'background-color': '#ffffff',
+                        'border': 'none',
+                        'padding': '0',
+                        'margin': '0'
+                    });
+                });
+                
+                // Properly style any tables inside the response
+                gptResponse.find('table').each(function() {
+                    if (!$(this).hasClass('table')) {
+                        $(this).addClass('table table-striped table-bordered');
+                    }
+                });
+                
+                // Make sure any badges are properly styled
+                gptResponse.find('.badge').each(function() {
+                    $(this).css({
+                        'display': 'inline-block',
+                        'padding': '0.2em 0.6em',
+                        'font-size': '85%',
+                        'font-weight': '700',
+                        'line-height': '1',
+                        'text-align': 'center',
+                        'white-space': 'nowrap',
+                        'vertical-align': 'baseline',
+                        'border-radius': '0.25rem'
+                    });
+                    
+                    if ($(this).hasClass('badge-primary')) {
+                        $(this).css({
+                            'color': '#fff',
+                            'background-color': '#007bff'
+                        });
+                    }
+                });
+            }
+            
+            // Handle header formatting better - add section classes
+            gptResponse.find('h1, h2, h3').each(function() {
+                var header = $(this);
+                var text = header.text();
+                
+                // Check if the header contains section numbers like "1. VALUATION SUMMARY"
+                if (/^\d+\.\s+/.test(text)) {
+                    header.addClass('section-header');
+                }
+                
+                // Format headers with financial terms
+                if (/VALUATION|SUMMARY|ANALYSIS|STRATEGY|OUTLOOK|OVERVIEW|TECHNICAL|FUNDAMENTAL|TRADING PLAN/i.test(text)) {
+                    header.addClass('financial-header');
+                }
+                
+                // Add anchors to headers for navigation
+                var id = text.toLowerCase().replace(/[^\w]+/g, '-');
+                if (id && !header.attr('id')) {
+                    header.attr('id', id);
+                }
+            });
+            
+            // Fix nested list styling
+            gptResponse.find('ul, ol').each(function() {
+                var list = $(this);
+                if (list.parent().is('li')) {
+                    list.removeClass('list-group').addClass('nested-list');
+                    list.find('li').removeClass('list-group-item').addClass('nested-list-item');
+                }
+            });
+            
+            // Format dollar amounts and percentages in text
+            gptResponse.find('p, li, td').each(function() {
+                var element = $(this);
+                var html = element.html();
+                
+                // Format dollar amounts ($XX.XX)
+                html = html.replace(/(\$\d+(\.\d+)?)/g, '<span class="stock-data"><span class="price">$1</span></span>');
+                
+                // Format percentages with + or - sign
+                html = html.replace(/(\+\d+(\.\d+)?%)/g, '<span class="stock-data"><span class="percentage percentage-positive">$1</span></span>');
+                html = html.replace(/(\-\d+(\.\d+)?%)/g, '<span class="stock-data"><span class="percentage percentage-negative">$1</span></span>');
+                
+                element.html(html);
+            });
+            
+            // Format stock tickers (uppercase letters in parentheses) 
+            gptResponse.find('p, li, td').each(function() {
+                var element = $(this);
+                var html = element.html();
+                
+                // Match patterns like (AAPL) or (GOOG)
+                html = html.replace(/\(([A-Z]{1,5})\)/g, '(<code>$1</code>)');
+                
+                element.html(html);
+            });
+            
+            // Add structure to key-value pairs often found in financial analysis
+            gptResponse.find('p, li').each(function() {
+                var element = $(this);
+                var text = element.text();
+                
+                // Match patterns like "Key: Value" common in stock reports
+                if (/^([^:]+):\s+(.+)$/.test(text)) {
+                    var html = element.html();
+                    html = html.replace(/^([^:]+):\s+/, '<strong>$1:</strong> ');
+                    element.html(html);
+                }
+            });
+            
+            // Fix any remaining tables
+            gptResponse.find('table').each(function() {
+                var table = $(this);
+                if (!table.hasClass('table')) {
+                    table.addClass('table table-striped table-bordered');
+                }
+                
+                // Make sure table is properly contained
+                if (!table.parent().is('div.table-responsive')) {
+                    table.wrap('<div class="table-responsive"></div>');
+                }
+            });
+            
+            // Add spacing between sections
+            gptResponse.find('h2').each(function() {
+                var header = $(this);
+                // Add a horizontal rule before each major section unless it's the first section
+                if (!header.prev().is('h1')) {
+                    header.before('<hr class="my-4">');
+                }
+            });
+            
+            // Create a table of contents from h2 headers if there are more than 3 sections
+            var h2Headers = gptResponse.find('h2');
+            if (h2Headers.length >= 3) {
+                var tocHtml = '<div class="card mb-4"><div class="card-header bg-light">' +
+                              '<strong>Table of Contents</strong></div><div class="card-body p-0">' +
+                              '<ul class="list-group list-group-flush toc-list">';
+                
+                h2Headers.each(function() {
+                    var header = $(this);
+                    var id = header.attr('id') || '';
+                    var text = header.text();
+                    
+                    tocHtml += '<li class="list-group-item border-0 py-2">' +
+                              '<a href="#' + id + '" class="text-decoration-none">' + text + '</a></li>';
+                });
+                
+                tocHtml += '</ul></div></div>';
+                
+                // Insert the TOC after the first heading
+                var firstHeading = gptResponse.find('h1, h2').first();
+                firstHeading.after(tocHtml);
+            }
+            
+            // Format financial terms consistently
+            var financialTerms = [
+                'P/E', 'EPS', 'EBITDA', 'ROE', 'ROI', 'ROA', 'P/B', 'PEG', 'DCF', 
+                'WACC', 'FCF', 'CAGR', 'YoY', 'QoQ', 'TTM'
+            ];
+            
+            financialTerms.forEach(function(term) {
+                gptResponse.find('p, li, td').each(function() {
+                    var element = $(this);
+                    var html = element.html();
+                    
+                    var regex = new RegExp('\\b' + term + '\\b', 'g');
+                    html = html.replace(regex, '<span class="financial-metric">' + term + '</span>');
+                    
+                    element.html(html);
+                });
+            });
+            
+            // Add target="_blank" to external links
+            gptResponse.find('a[href^="http"]').attr('target', '_blank').attr('rel', 'noopener noreferrer');
+        }
     </script>
 </body>
 </html>
